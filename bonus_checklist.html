@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Чек-лист диагностики импорта — WhiteWayChina</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Open Sans', sans-serif;
+    background: #f5f5f5;
+    color: #1c1c1c;
+    line-height: 1.6;
+  }
+
+  .page {
+    max-width: 800px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 60px 64px;
+    box-shadow: 0 2px 24px rgba(0,0,0,0.10);
+  }
+
+  /* Cover */
+  .cover {
+    text-align: center;
+    padding-bottom: 48px;
+    border-bottom: 2px solid #597dee;
+    margin-bottom: 48px;
+  }
+
+  .logo-line {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #597dee;
+    margin-bottom: 32px;
+  }
+
+  .cover h1 {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: #1c1c1c;
+    margin-bottom: 12px;
+  }
+
+  .cover h1 span { color: #597dee; }
+
+  .cover .subtitle {
+    font-size: 18px;
+    font-weight: 400;
+    color: #555;
+    margin-bottom: 28px;
+  }
+
+  .cover .lead {
+    font-size: 15px;
+    color: #444;
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* Back link */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #597dee;
+    text-decoration: none;
+    margin-bottom: 32px;
+    transition: opacity 0.2s;
+  }
+
+  .back-link:hover { opacity: 0.7; }
+
+  .back-link svg {
+    width: 16px; height: 16px;
+    stroke: currentColor; fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  /* How to use */
+  .how-to {
+    background: #f0f4ff;
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 48px;
+    font-size: 14px;
+    color: #444;
+    line-height: 1.7;
+  }
+
+  .how-to strong { color: #1c1c1c; }
+
+  /* Questions */
+  .question {
+    margin-bottom: 36px;
+    padding-bottom: 36px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .question:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .q-header {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+
+  .q-num {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: #597dee;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .q-text {
+    font-size: 17px;
+    font-weight: 700;
+    color: #1c1c1c;
+    line-height: 1.4;
+    padding-top: 5px;
+  }
+
+  .q-explain {
+    margin-left: 52px;
+    font-size: 14px;
+    color: #555;
+    line-height: 1.7;
+  }
+
+  .q-explain strong {
+    color: #1c1c1c;
+  }
+
+  .q-tag {
+    display: inline-block;
+    margin-left: 52px;
+    margin-top: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 4px 10px;
+    border-radius: 4px;
+    background: #fff3cd;
+    color: #8a6d00;
+  }
+
+  /* Result */
+  .result {
+    background: #fff3cd;
+    border-left: 4px solid #e6a817;
+    padding: 20px 24px;
+    border-radius: 6px;
+    margin-top: 48px;
+    margin-bottom: 48px;
+  }
+
+  .result strong { display: block; margin-bottom: 6px; font-size: 16px; }
+  .result p { font-size: 14px; color: #555; line-height: 1.7; }
+
+  /* Print */
+  .print-btn {
+    display: block;
+    width: fit-content;
+    margin: 0 auto 40px;
+    padding: 10px 28px;
+    background: #597dee;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+  }
+
+  .print-btn:hover { background: #4a6fd8; }
+
+  /* Footer */
+  .footer {
+    margin-top: 52px;
+    padding-top: 28px;
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .footer-author { font-size: 14px; color: #555; }
+  .footer-author strong { display: block; font-size: 15px; color: #1c1c1c; font-weight: 700; }
+  .footer-workshop { font-size: 13px; color: #888; text-align: right; line-height: 1.5; }
+
+  @media print {
+    body { background: #fff; }
+    .page { margin: 0; padding: 40px 48px; box-shadow: none; }
+    .print-btn, .back-link { display: none; }
+  }
+
+  @media (max-width: 640px) {
+    .page { padding: 32px 24px; margin: 0; box-shadow: none; }
+    .cover h1 { font-size: 24px; }
+    .q-explain, .q-tag { margin-left: 0; margin-top: 12px; }
+    .q-header { gap: 12px; }
+    .footer { flex-direction: column; align-items: flex-start; }
+    .footer-workshop { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <a href="hub_index.html" class="back-link">
+    <svg viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+    Все материалы
+  </a>
+
+  <div class="cover">
+    <div class="logo-line">WhiteWayChina · Александра Шумилова</div>
+    <h1>Чек-лист диагностики <span>вашего импорта</span></h1>
+    <div class="subtitle">7 вопросов · 3 минуты · честный ответ себе</div>
+    <p class="lead">Ответьте на каждый вопрос: да или нет. Без гугла, без документов — только то, что знаете прямо сейчас. Ниже — пояснения, почему каждый пункт важен.</p>
+  </div>
+
+  <button class="print-btn" onclick="window.print()">Сохранить как PDF</button>
+
+  <div class="how-to">
+    <strong>Как пользоваться:</strong> пройдитесь по каждому вопросу. Если ответ «нет» или «не уверен» — это зона риска в вашей текущей схеме. Три и более «нет» = слепой импорт.
+  </div>
+
+  <div class="questions">
+
+    <div class="question">
+      <div class="q-header">
+        <div class="q-num">1</div>
+        <div class="q-text">У вас есть двуязычный контракт (рус + англ) с поставщиком?</div>
+      </div>
+      <div class="q-explain">
+        Контракт на одном языке — особенно только на китайском или только на русском — юридически уязвим. В случае спора арбитраж потребует перевод, а расхождения между версиями станут аргументом против вас. <strong>Двуязычный контракт — базовое условие защиты</strong> при любых претензиях.
+      </div>
+      <div class="q-tag">Документы · Контракт</div>
+    </div>
+
+    <div class="question">
+      <div class="q-header">
+        <div class="q-num">2</div>
+        <div class="q-text">Вы видели экспортную декларацию на последнюю поставку?</div>
+      </div>
+      <div class="q-explain">
+        Экспортная декларация — это документ, который оформляет поставщик на стороне Китая. Она подтверждает, что товар <strong>легально покинул территорию КНР</strong>. Если вы её никогда не видели — вы не знаете, совпадают ли данные с тем, что заявлено на российской таможне. А таможня может проверить.
+      </div>
+      <div class="q-tag">Документы · Экспорт</div>
+    </div>
+
+    <div class="question">
+      <div class="q-header">
+        <div class="q-num">3</div>
+        <div class="q-text">Вы знаете реальную себестоимость партии — с учётом всех расходов до склада?</div>
+      </div>
+      <div class="q-explain">
+        «Цена от поставщика» — это не себестоимость. Реальная себестоимость включает: товар + доставку до порта + фрахт + страховку + таможенные платежи + услуги брокера + внутреннюю логистику + комиссии агента. <strong>Если вы не знаете эту цифру — вы не знаете свою маржу.</strong>
+      </div>
+      <div class="q-tag">Деньги · Себестоимость</div>
+    </div>
+
+    <div class="question">
+      <div class="q-header">
+        <div class="q-num">4</div>
+        <div class="q-text">Вы знаете суммы таможенных платежей по вашей последней поставке?</div>
+      </div>
+      <div class="q-explain">
+        Таможенные платежи — пошлина, НДС, акциз — могут составлять от 15% до 40% стоимости товара. Если вы не знаете точные суммы, значит кто-то другой их контролирует. <strong>А значит, может завышать.</strong> Проверяется по таможенной декларации (ДТ) — она должна быть у вас.
+      </div>
+      <div class="q-tag">Деньги · Таможня</div>
+    </div>
+
+    <div class="question">
+      <div class="q-header">
+        <div class="q-num">5</div>
+        <div class="q-text">Вы знаете код ТН ВЭД своего товара и что к нему применяется?</div>
+      </div>
+      <div class="q-explain">
+        Код ТН ВЭД определяет всё: ставку пошлины, требования по сертификации, ограничения на ввоз. <strong>Неправильный код = переплата или штраф.</strong> Если вы его не знаете — вы доверяете брокеру или посреднику выбрать за вас. А у них может быть мотивация выбрать не тот.
+      </div>
+      <div class="q-tag">Документы · Классификация</div>
+    </div>
+
+    <div class="question">
+      <div class="q-header">
+        <div class="q-num">6</div>
+        <div class="q-text">Какая информация должна быть обязательно отражена в маркировке вашего товара?</div>
+      </div>
+      <div class="q-explain">
+        Маркировка — это не этикетка для красоты. Для разных категорий товаров закон требует конкретную информацию: состав, страну происхождения, данные импортёра, предупреждения. <strong>Несоответствие маркировки = основание для ареста партии на таможне</strong> и штрафа до 300 000 руб.
+      </div>
+      <div class="q-tag">Документы · Маркировка</div>
+    </div>
+
+    <div class="question">
+      <div class="q-header">
+        <div class="q-num">7</div>
+        <div class="q-text">Вы знаете, как проверить, что вами были соблюдены требования валютного контроля со стороны банка?</div>
+      </div>
+      <div class="q-explain">
+        Каждый платёж иностранному поставщику проходит валютный контроль. Банк обязан проверить — и у вас обязаны быть подтверждающие документы. <strong>Нарушение валютного контроля — штраф от 20% до 40% от суммы операции</strong> + возможная блокировка счёта. Именно это чаще всего приводит к неожиданным проблемам.
+      </div>
+      <div class="q-tag">Деньги · Валютный контроль</div>
+    </div>
+
+  </div>
+
+  <div class="result">
+    <strong>3 и более «нет» — это слепой импорт</strong>
+    <p>Не в теории — в вашей конкретной схеме прямо сейчас. Хорошая новость: каждый из этих пунктов можно закрыть. Как именно — разбираем на воркшопе.</p>
+  </div>
+
+  <div class="footer">
+    <div class="footer-author">
+      <strong>Александра Шумилова</strong>
+      Эксперт по ВЭД с Китаем · WhiteWayChina
+    </div>
+    <div class="footer-workshop">
+      Воркшоп «Слепой импорт — увидеть реальность»<br>
+      28–29 марта · Zoom · бесплатно
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
