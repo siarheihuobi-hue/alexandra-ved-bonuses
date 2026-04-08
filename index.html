@@ -4,302 +4,592 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Материалы воркшопа — WhiteWayChina</title>
-<meta name="description" content="Бонусные материалы воркшопа «Слепой импорт — увидеть реальность». Чек-лист, вопросы для проверки посредника, план перехода, карта рисков.">
+<meta name="description" content="Бонусные материалы воркшопа «Неуправляемый импорт — увидеть реальность». Чек-лист, вопросы для проверки агента, план перехода, карта рисков.">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* ═══════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════ */
+:root {
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
 
-  body {
-    font-family: 'Open Sans', sans-serif;
-    background: #f5f5f5;
-    color: #1c1c1c;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
+  --bg:            hsl(225 20% 7%);
+  --bg-soft:       hsl(225 18% 10%);
+  --bg-elevated:   hsl(225 16% 13%);
+  --bg-glass:      rgba(255, 255, 255, 0.04);
 
-  .page {
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 48px 40px 60px;
-  }
+  --text:          #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.65);
+  --muted:         rgba(255, 255, 255, 0.45);
 
-  /* Header */
-  .header {
-    text-align: center;
-    margin-bottom: 48px;
-  }
+  --border:        rgba(255, 255, 255, 0.08);
+  --border-hover:  rgba(255, 255, 255, 0.15);
 
-  .logo-line {
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: #597dee;
-    margin-bottom: 20px;
-  }
+  --accent:        hsl(228 70% 55%);
+  --accent-dark:   hsl(228 70% 45%);
+  --accent-light:  hsl(228 80% 70%);
+  --accent-glow:   hsla(228 80% 60% / 0.25);
+  --accent-bg:     hsla(228 70% 55% / 0.08);
 
-  .header h1 {
-    font-size: 32px;
-    font-weight: 700;
-    color: #1c1c1c;
-    line-height: 1.25;
-    margin-bottom: 10px;
-  }
+  --gold:          hsl(43 85% 47%);
+  --gold-light:    hsl(43 90% 60%);
+  --gold-glow:     hsla(43 85% 47% / 0.25);
+  --gradient-gold: linear-gradient(135deg, #c8940f, #f0c040, #c8940f);
 
-  .header .subtitle {
-    font-size: 16px;
-    color: #777;
-    font-weight: 400;
-  }
+  --shadow-sm:     0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md:     0 4px 24px rgba(0, 0, 0, 0.4);
+  --shadow-lg:     0 8px 48px rgba(0, 0, 0, 0.5);
+  --shadow-glow:   0 0 40px var(--accent-glow);
 
-  /* Cards */
-  .cards {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    margin-bottom: 56px;
-  }
+  --radius:        14px;
+  --radius-sm:     10px;
+  --radius-lg:     20px;
 
-  .card {
-    background: #fff;
-    border-radius: 14px;
-    padding: 32px 32px 28px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-    border: 1px solid rgba(0,0,0,0.06);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-    display: flex;
-    gap: 24px;
-    align-items: flex-start;
-    text-decoration: none;
-    color: inherit;
-    cursor: default;
-  }
+  --trans:         0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --trans-bounce:  0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --col:           860px;
 
-  .card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 28px rgba(89,125,238,0.12);
-  }
+  --gradient-hero: linear-gradient(135deg, hsl(225 25% 8%) 0%, hsl(228 30% 12%) 25%, hsl(240 20% 10%) 50%, hsl(220 25% 9%) 75%, hsl(225 25% 8%) 100%);
+  --gradient-accent: linear-gradient(135deg, hsl(228 70% 50%), hsl(250 60% 55%));
+}
 
-  .card-icon {
-    flex-shrink: 0;
-    width: 52px;
-    height: 52px;
-    border-radius: 12px;
-    background: #f0f4ff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+/* ═══════════════════════════════════════
+   NOISE TEXTURE OVERLAY
+═══════════════════════════════════════ */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.025;
+  mix-blend-mode: overlay;
+}
 
-  .card-icon svg {
-    width: 26px;
-    height: 26px;
-    stroke: #597dee;
-    fill: none;
-    stroke-width: 1.8;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
+/* ═══════════════════════════════════════
+   FLOATING ORBS
+═══════════════════════════════════════ */
+.orb {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(80px);
+  z-index: 0;
+  opacity: 0;
+  animation: orbFadeIn 2s ease forwards;
+}
 
-  .card-body {
-    flex: 1;
-    min-width: 0;
-  }
+.orb-1 {
+  width: 500px; height: 500px;
+  background: hsla(228 80% 55% / 0.08);
+  top: -100px; right: -150px;
+  animation-delay: 0.5s;
+}
 
-  .card-num {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #597dee;
-    margin-bottom: 6px;
-  }
+.orb-2 {
+  width: 400px; height: 400px;
+  background: hsla(250 60% 50% / 0.06);
+  bottom: 10%; left: -120px;
+  animation-delay: 1.2s;
+}
 
-  .card-title {
-    font-size: 18px;
-    font-weight: 700;
-    color: #1c1c1c;
-    line-height: 1.35;
-    margin-bottom: 8px;
-  }
+@keyframes orbFadeIn {
+  to { opacity: 1; }
+}
 
-  .card-desc {
-    font-size: 14px;
-    color: #555;
-    line-height: 1.65;
-    margin-bottom: 16px;
-  }
+/* ═══════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  .card-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 10px 22px;
-    background: #597dee;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: background 0.2s ease, transform 0.15s ease;
-    cursor: pointer;
-  }
+html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
 
-  .card-btn:hover {
-    background: #4a6fd8;
-    transform: translateX(2px);
-  }
+body {
+  overflow-x: hidden;
+  overflow-wrap: anywhere;
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+}
 
-  .card-btn svg {
-    width: 16px;
-    height: 16px;
-    stroke: currentColor;
-    fill: none;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
+/* ═══════════════════════════════════════
+   PAGE CONTAINER
+═══════════════════════════════════════ */
+.page {
+  max-width: var(--col);
+  margin: 0 auto;
+  padding: 60px 48px 48px;
+  position: relative;
+  z-index: 1;
+}
 
-  /* Locked card */
-  .card--locked {
-    border: 1.5px dashed #c5cee6;
-    background: #fafbfe;
-  }
+/* ═══════════════════════════════════════
+   HEADER / HERO
+═══════════════════════════════════════ */
+.header {
+  text-align: center;
+  margin-bottom: 48px;
+  padding: 48px 32px 56px;
+  border-radius: var(--radius-lg);
+  background: var(--gradient-hero);
+  background-size: 300% 300%;
+  animation: gradientShift 12s ease infinite;
+  position: relative;
+}
 
-  .card--locked:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(89,125,238,0.08);
-  }
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
 
-  .card--locked .card-icon {
-    background: #eef0f7;
-  }
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  25% { background-position: 100% 0%; }
+  50% { background-position: 100% 100%; }
+  75% { background-position: 0% 100%; }
+}
 
-  .card--locked .card-icon svg {
-    stroke: #8a96b8;
-  }
+.logo-line {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-light);
+  margin-bottom: 32px;
+  font-family: var(--font-display);
+}
 
-  .card--locked .card-title {
-    color: #444;
-  }
+.header h1 {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+  margin-bottom: 16px;
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
 
-  .card--locked .card-desc {
-    color: #777;
-  }
+.header .subtitle {
+  font-size: 17px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-family: var(--font-display);
+}
 
-  .locked-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 20px;
-    background: #eef0f7;
-    color: #6b7a9e;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: background 0.2s ease;
-  }
+/* ═══════════════════════════════════════
+   CARDS
+═══════════════════════════════════════ */
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 56px;
+}
 
-  .locked-badge:hover {
-    background: #e4e8f4;
-  }
+.card {
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: var(--radius);
+  padding: 32px 32px 28px;
+  border: 1px solid var(--border);
+  transition: all var(--trans);
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  text-decoration: none;
+  color: inherit;
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+  /* fadeUp init */
+  opacity: 0;
+  transform: translateY(24px);
+  animation: fadeUp 0.6s ease-out forwards;
+}
 
-  .locked-badge svg {
-    width: 15px;
-    height: 15px;
-    stroke: currentColor;
-    fill: none;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-light), transparent);
+  opacity: 0.2;
+}
 
-  /* Footer */
-  .footer {
-    padding-top: 28px;
-    border-top: 1px solid #e0e0e0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
+.card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-md), 0 0 30px var(--accent-glow);
+}
 
-  .footer-author {
-    font-size: 14px;
-    color: #555;
-  }
+/* Staggered animation delays */
+.card:nth-child(1) { animation-delay: 0.1s; }
+.card:nth-child(2) { animation-delay: 0.2s; }
+.card:nth-child(3) { animation-delay: 0.3s; }
+.card:nth-child(4) { animation-delay: 0.4s; }
 
-  .footer-author strong {
-    display: block;
-    font-size: 15px;
-    color: #1c1c1c;
-    font-weight: 700;
-  }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-  .footer-bot {
-    font-size: 13px;
-    color: #888;
-    text-align: right;
-  }
+.card-icon {
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: var(--gradient-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px var(--accent-glow);
+  position: relative;
+}
 
-  .footer-bot a {
-    color: #597dee;
-    text-decoration: none;
-    font-weight: 600;
-  }
+.card-icon::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 14px;
+  background: var(--gradient-accent);
+  opacity: 0.15;
+  z-index: -1;
+  filter: blur(8px);
+}
 
-  .footer-bot a:hover {
-    text-decoration: underline;
-  }
+.card-icon svg {
+  width: 26px;
+  height: 26px;
+  stroke: #fff;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 
-  /* Animations */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(18px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+.card-body {
+  flex: 1;
+  min-width: 0;
+}
 
-  .header { animation: fadeUp 0.5s ease-out both; }
-  .card:nth-child(1) { animation: fadeUp 0.5s ease-out 0.1s both; }
-  .card:nth-child(2) { animation: fadeUp 0.5s ease-out 0.2s both; }
-  .card:nth-child(3) { animation: fadeUp 0.5s ease-out 0.3s both; }
-  .card:nth-child(4) { animation: fadeUp 0.5s ease-out 0.4s both; }
+.card-num {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-light);
+  margin-bottom: 6px;
+  font-family: var(--font-display);
+}
 
-  /* Mobile */
-  @media (max-width: 640px) {
-    .page { padding: 28px 20px 40px; }
-    .header h1 { font-size: 24px; }
-    .card { padding: 24px 20px 22px; gap: 16px; }
-    .card-icon { width: 44px; height: 44px; }
-    .card-icon svg { width: 22px; height: 22px; }
-    .card-title { font-size: 16px; }
-    .footer { flex-direction: column; align-items: flex-start; }
-    .footer-bot { text-align: left; }
-  }
+.card-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.35;
+  margin-bottom: 8px;
+  font-family: var(--font-display);
+}
 
-  /* Print */
-  @media print {
-    body { background: #fff; }
-    .page { padding: 20px; }
-    .card { break-inside: avoid; box-shadow: none; border: 1px solid #ddd; }
-    .card:hover { transform: none; box-shadow: none; }
-  }
+.card-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  margin-bottom: 16px;
+}
+
+.card-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 24px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--trans);
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  min-height: 44px;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { left: -100%; }
+  50% { left: 150%; }
+}
+
+.card-btn:hover {
+  background: var(--accent-dark);
+  transform: translateX(2px);
+  box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+.card-btn svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ═══════════════════════════════════════
+   LOCKED CARD
+═══════════════════════════════════════ */
+.card--locked {
+  border: 1.5px dashed hsla(228 70% 55% / 0.25);
+  background: hsla(228 70% 55% / 0.03);
+}
+
+.card--locked::before {
+  opacity: 0.1;
+}
+
+.card--locked:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm), 0 0 20px hsla(228 80% 60% / 0.1);
+  border-color: hsla(228 70% 55% / 0.35);
+}
+
+.card--locked .card-icon {
+  background: hsla(228 70% 55% / 0.12);
+  box-shadow: none;
+}
+
+.card--locked .card-icon::after {
+  display: none;
+}
+
+.card--locked .card-icon svg {
+  stroke: var(--muted);
+}
+
+.card--locked .card-title {
+  color: var(--text-secondary);
+}
+
+.card--locked .card-desc {
+  color: var(--muted);
+}
+
+.locked-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: hsla(228 70% 55% / 0.08);
+  color: var(--muted);
+  border-radius: var(--radius-sm);
+  border: 1px solid hsla(228 70% 55% / 0.12);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--trans);
+  font-family: var(--font-display);
+  min-height: 44px;
+}
+
+.locked-badge:hover {
+  background: hsla(228 70% 55% / 0.12);
+  border-color: hsla(228 70% 55% / 0.2);
+}
+
+.locked-badge svg {
+  width: 15px;
+  height: 15px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+.footer {
+  padding-top: 28px;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-hover), transparent);
+}
+
+.footer-author {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.footer-author strong {
+  display: block;
+  font-size: 15px;
+  color: var(--text);
+  font-weight: 700;
+  font-family: var(--font-display);
+}
+
+.footer-bot {
+  font-size: 13px;
+  color: var(--muted);
+  text-align: right;
+}
+
+.footer-bot a {
+  color: var(--accent-light);
+  text-decoration: none;
+  font-weight: 600;
+  transition: opacity var(--trans);
+}
+
+.footer-bot a:hover {
+  opacity: 0.7;
+}
+
+/* ═══════════════════════════════════════
+   ANIMATIONS — header fadeUp
+═══════════════════════════════════════ */
+.header {
+  animation: fadeUp 0.5s ease-out both, gradientShift 12s ease infinite;
+}
+
+/* ═══════════════════════════════════════
+   TABLET (max-width: 900px)
+═══════════════════════════════════════ */
+@media (max-width: 900px) {
+  .page { padding: 48px 32px; }
+  .header h1 { font-size: 30px; }
+}
+
+/* ═══════════════════════════════════════
+   MOBILE (max-width: 640px)
+═══════════════════════════════════════ */
+@media (max-width: 640px) {
+  .page { padding: 32px 20px 32px; }
+  .header { padding: 32px 16px 40px; }
+  .header h1 { font-size: 26px; }
+  .header .subtitle { font-size: 15px; }
+  .card { padding: 24px 20px 22px; gap: 16px; }
+  .card-icon { width: 44px; height: 44px; }
+  .card-icon svg { width: 22px; height: 22px; }
+  .card-title { font-size: 16px; }
+  .card-btn { padding: 12px 20px; font-size: 13px; }
+  .locked-badge { padding: 10px 16px; font-size: 12px; }
+  .footer { flex-direction: column; align-items: flex-start; }
+  .footer-bot { text-align: left; }
+  .orb-1 { width: 300px; height: 300px; }
+  .orb-2 { width: 250px; height: 250px; }
+}
+
+/* ═══════════════════════════════════════
+   REDUCED MOTION
+═══════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .orb { display: none; }
+  .header { animation: none; background-size: 100% 100%; }
+  .card { opacity: 1; transform: none; animation: none; transition: border-color var(--trans), box-shadow var(--trans); }
+  .card-btn::after { animation: none; }
+  @keyframes shimmer { 0%, 100% { left: -100%; } }
+  @keyframes gradientShift { 0%, 100% { background-position: 0% 50%; } }
+}
+
+/* ═══════════════════════════════════════
+   PRINT STYLES
+═══════════════════════════════════════ */
+@media print {
+  body { background: #fff; color: #1c1c1c; }
+  body::before { display: none; }
+  .orb { display: none; }
+  .page { margin: 0; padding: 20px; }
+  .header { background: none; animation: none; }
+  .header h1 { color: #1c1c1c; }
+  .header .subtitle { color: #555; }
+  .logo-line { color: #597dee; }
+  .header::after { background: #597dee; }
+  .card { opacity: 1; transform: none; animation: none; background: #f8f9ff; border-color: #e0e4f0; box-shadow: none; backdrop-filter: none; break-inside: avoid; }
+  .card::before { display: none; }
+  .card:hover { transform: none; box-shadow: none; }
+  .card-icon { background: #597dee; box-shadow: none; }
+  .card-icon::after { display: none; }
+  .card-num { color: #597dee; }
+  .card-title { color: #1c1c1c; }
+  .card-desc { color: #555; }
+  .card-btn { background: #597dee; box-shadow: none; }
+  .card--locked { border-color: #c5cee6; background: #fafbfe; }
+  .card--locked .card-icon { background: #eef0f7; }
+  .card--locked .card-icon svg { stroke: #8a96b8; }
+  .card--locked .card-title { color: #444; }
+  .card--locked .card-desc { color: #777; }
+  .locked-badge { background: #eef0f7; color: #6b7a9e; border-color: #d0d8f0; }
+  .footer::before { background: #e0e0e0; }
+  .footer-author { color: #555; }
+  .footer-author strong { color: #1c1c1c; }
+  .footer-bot { color: #888; }
+  .footer-bot a { color: #597dee; }
+}
 </style>
 </head>
 <body>
+
+<!-- Floating orbs -->
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
 
 <div class="page">
 
   <div class="header">
     <div class="logo-line">WhiteWayChina · Александра Шумилова</div>
     <h1>Ваши материалы воркшопа</h1>
-    <div class="subtitle">«Слепой импорт — увидеть реальность» · 28–29 марта 2026</div>
+    <div class="subtitle">«Неуправляемый импорт — увидеть реальность» · 11 апреля 2026</div>
   </div>
 
   <div class="cards">
@@ -327,9 +617,9 @@
       </div>
       <div class="card-body">
         <div class="card-num">Бонус 2</div>
-        <div class="card-title">Можно ли ему доверять? 20 вопросов для проверки посредника</div>
-        <div class="card-desc">Задайте эти вопросы своему посреднику или логисту — и за 15 минут поймёте, можно ли ему доверять. Не по ощущениям, а по фактам.</div>
-        <a href="https://alexandra-ved-bonus-questions.vercel.app" class="card-btn">
+        <div class="card-title">Можно ли ему доверять? 20 вопросов для проверки агента</div>
+        <div class="card-desc">Задайте эти вопросы своему агенту или логисту — и за 15 минут поймёте, можно ли ему доверять. Не по ощущениям, а по фактам.</div>
+        <a href="/questions/" class="card-btn">
           Открыть вопросы
           <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </a>
@@ -339,12 +629,12 @@
     <!-- Card 3: Plan -->
     <div class="card">
       <div class="card-icon">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.5" fill="#597dee" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="#597dee" stroke="none"/><circle cx="12" cy="19" r="1.5" fill="#597dee" stroke="none"/><path d="M12 6.5v4"/><path d="M12 13.5v4"/></svg>
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.5" fill="#fff" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="#fff" stroke="none"/><circle cx="12" cy="19" r="1.5" fill="#fff" stroke="none"/><path d="M12 6.5v4"/><path d="M12 13.5v4"/></svg>
       </div>
       <div class="card-body">
-        <div class="card-num">Бонус 3 · для прошедших оба дня</div>
-        <div class="card-title">Пошаговый план перехода к управляемому импорту</div>
-        <div class="card-desc">Что делать первым, что вторым, на что обратить внимание в первой же следующей поставке. Дорожная карта от слепого импорта к системе.</div>
+        <div class="card-num">Бонус 3 · для участников воркшопа</div>
+        <div class="card-title">Пошаговый план перехода к контролируемому импорту</div>
+        <div class="card-desc">Что делать первым, что вторым, на что обратить внимание в первой же следующей поставке. Дорожная карта от неуправляемого импорта к системе.</div>
         <a href="bonus_plan.html" class="card-btn">
           Открыть план
           <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
@@ -360,8 +650,8 @@
       <div class="card-body">
         <div class="card-num">Ускоритель</div>
         <div class="card-title">Интерактивная карта рисков импорта</div>
-        <div class="card-desc">Полная карта уязвимых точек вашей схемы — от контракта до склада. Доступна участникам Системы Каскадного Импорта.</div>
-        <a href="https://alexandra-ved-risk-map.vercel.app" class="locked-badge">
+        <div class="card-desc">Полная карта уязвимых точек вашей схемы — от контракта до склада. Доступна участникам Системы Контролируемого Импорта.</div>
+        <a href="/risk/" class="locked-badge">
           <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
           Доступ по паролю — для участников СКИ
         </a>
@@ -377,7 +667,7 @@
     </div>
     <div class="footer-bot">
       Есть вопросы?<br>
-      Напишите боту <a href="https://t.me/AShumilova_bot" target="_blank">@AShumilova_bot</a>
+      Напишите боту <a href="https://t.me/AShumilova_bot" target="_blank" rel="noopener noreferrer">@AShumilova_bot</a>
     </div>
   </div>
 
